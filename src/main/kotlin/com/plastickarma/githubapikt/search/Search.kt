@@ -3,6 +3,7 @@ package com.plastickarma.githubapikt.search
 import com.plastickarma.githubapikt.base.GitHubAPIContext
 import com.plastickarma.githubapikt.http.HttpContext
 import com.plastickarma.githubapikt.pagination.nextLink
+import com.plastickarma.githubapikt.search.query.SearchQueryBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ReceiveChannel
@@ -20,11 +21,11 @@ import kotlinx.coroutines.channels.produce
 @ExperimentalCoroutinesApi
 fun <T : Any> GitHubAPIContext.search(
     type: SearchType<T>,
-    query: String,
     scope: CoroutineScope,
-    httpContext: HttpContext<List<T>> = type.httpContext()
+    httpContext: HttpContext<List<T>> = type.httpContext(),
+    query: SearchQueryBuilder.() -> Unit
 ): ReceiveChannel<T> = scope.produce {
-    var queryParameters = listOf("q" to query)
+    var queryParameters = listOf("q" to SearchQueryBuilder().also(query).build())
     var currentUrl = type.url
     while (true) {
         val request = httpContext.httpGET(currentUrl, queryParameters)
@@ -52,6 +53,6 @@ fun <T : Any> CoroutineScope.search(
     type: SearchType<T>,
     context: GitHubAPIContext,
     httpContext: HttpContext<List<T>> = type.httpContext(),
-    query: String
+    query: SearchQueryBuilder.() -> Unit
 ) =
-    context.search(type, query, this, httpContext)
+    context.search(type, this, httpContext, query)

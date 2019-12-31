@@ -14,10 +14,10 @@ suspend fun main(): Unit = coroutineScope {
 
     val token = "<YOUR TOKEN HERE>"
     GitHubAPIContext(OAuth2Token(token)).search(
-        ISSUES, "label:good-first-issue+state:open+language:python", this)
+        ISSUES, this) { }
         .consumeEach { println(it) }
 
     GitHubAPIContext(NoAuth).search(
-        ISSUES, "label:good-first-issue+state:open+language:python", this)
+        ISSUES, this) { }
         .consumeEach { println(it) }
 }

@@ -36,8 +36,7 @@ class SearchTest {
         val issues = search(
             ISSUES,
             GitHubAPIContext(),
-            mockHttpContext,
-            "label:good-first-issue")
+            mockHttpContext) { }
         .toList()
 
         assertThat(issues).containsExactlyElementsOf(expectedIssues)
@@ -62,13 +61,13 @@ class SearchTest {
 
         val apiContext = GitHubAPIContext()
 
-        assertThat(search(ISSUES, apiContext, mockHttpContext, "label:good-first-issue").toList())
+        assertThat(search(ISSUES, apiContext, mockHttpContext) { }.toList())
             .containsExactlyElementsOf(expectedIssues)
 
-        assertThat(ISSUES.search(apiContext, "label:good-first-issue", this, mockHttpContext).toList())
+        assertThat(ISSUES.search(apiContext, this, mockHttpContext) { }.toList())
             .containsExactlyElementsOf(expectedIssues)
 
-        assertThat(apiContext.search(ISSUES, "label:good-first-issue", this, mockHttpContext).toList())
+        assertThat(apiContext.search(ISSUES, this, mockHttpContext) { }.toList())
             .containsExactlyElementsOf(expectedIssues)
     }
 
@@ -111,8 +110,7 @@ class SearchTest {
         val issues = search(
             ISSUES,
             GitHubAPIContext(),
-            mockHttpContext,
-            "label:good-first-issue")
+            mockHttpContext) { }
             .toList()
 
         assertThat(issues).containsExactlyElementsOf(firstPage + secondPage + thirdPage)
