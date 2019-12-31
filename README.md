@@ -3,6 +3,7 @@
 [![Build Status](https://api.travis-ci.com/plastic-karma/githubapikt.svg?branch=master)](https://travis-ci.com/plastic-karma/githubapikt) 
 [![Coverage Status](https://codecov.io/gh/plastic-karma/githubapikt/branch/master/graph/badge.svg)](https://codecov.io/gh/plastic-karma/githubapikt)
 [![Code Climate](https://codeclimate.com/github/plastic-karma/githubapikt/badges/gpa.svg)](https://codeclimate.com/github/plastic-karma/githubapikt)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/aedd472da48540b0be60b9cbe4a73b9b)](https://www.codacy.com/manual/plastic-karma/githubapikt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=plastic-karma/githubapikt&amp;utm_campaign=Badge_Grade)
 
 
 This is an early version of a library to access [Github API v3](https://developer.github.com/v3/) written in [Kotlin](https://github.com/JetBrains/kotlin) using [coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html).
