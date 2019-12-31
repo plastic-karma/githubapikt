@@ -1,6 +1,7 @@
 [![Kotlin version badge](https://img.shields.io/badge/kotlin-1.3-blue.svg)](https://kotlinlang.org/docs/reference/whatsnew13.html) 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 [![Build Status](https://api.travis-ci.com/plastic-karma/githubapikt.svg?branch=master)](https://travis-ci.com/plastic-karma/githubapikt) 
+[![Coverage Status](https://codecov.io/gh/plastic-karma/githubapikt/branch/master/graph/badge.svg)](https://codecov.io/gh/plastic-karma/githubapikt)
 
 
 This is an early version of a library to access [Github API v3](https://developer.github.com/v3/) written in [Kotlin](https://github.com/JetBrains/kotlin) using [coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html).
