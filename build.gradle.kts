@@ -1,3 +1,4 @@
+import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -104,4 +105,10 @@ tasks.withType<JacocoCoverageVerification> {
     afterEvaluate {
         classDirectories = codeCoverageFiles
     }
+}
+
+tasks.withType<DokkaTask> {
+    outputDirectory = "$buildDir/reports/javadoc"
+    noJdkLink = true
+    noStdlibLink = true
 }
