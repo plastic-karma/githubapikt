@@ -6,5 +6,6 @@ This is an early version of a library to access [Github API v3](https://develope
 
 There is still lots of stuff missing. Currently supported:
 
+- Authorization ([example](https://github.com/plastic-karma/githubapikt/blob/master/src/main/kotlin/com/plastickarma/githubapikt/examples/AuthExamples.kt))
 - Search
   - Issues ([example](https://github.com/plastic-karma/githubapikt/blob/master/src/main/kotlin/com/plastickarma/githubapikt/examples/SearchExamples.kt#L14))
