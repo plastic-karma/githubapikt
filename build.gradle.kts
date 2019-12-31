@@ -11,7 +11,6 @@ group = "com.plastickarma"
 version = "0.1-SNAPSHOT"
 
 repositories {
-    mavenCentral()
     jcenter()
 }
 
