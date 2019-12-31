@@ -1,25 +1,25 @@
 language: kotlin
-
 jdk:
-  - oraclejdk9
-
+- oraclejdk9
 stages:
-  - name: build
-
+- name: build
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - "$HOME/.gradle/caches/"
-    - "$HOME/.gradle/wrapper/"
-
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
 jobs:
   include:
-    - stage: build
-      script:
-        - ./gradlew clean build test
-      before_install:
-        - chmod +x gradlew
-        - chmod +x gradle/wrapper/gradle-wrapper.jar
+  - stage: build
+    script:
+    - "./gradlew clean build test"
+    before_install:
+    - chmod +x gradlew
+    - chmod +x gradle/wrapper/gradle-wrapper.jar
+    after_success:
+    - bash <(curl -s https://codecov.io/bash)
+env:
+  global:
+    secure: ozNbF6ERvv9CjcBjNonxnjfUpc43J4YLDHthULmS6nijml/C4fTznJ+3LR7JemBJ8YVrfyJYMhe3SN+GjZOZXVL9+fwIZzL56IHrkNKjWwI2tyfAxVZpcVHr2nkC1Slz2j1AmfygeDvDK13SB6FxR0NWaE2rnFf/l5ODQ5p9XviqNZZ+y2ATqZTlOlNyW3vSTg3kxYb9FgquQRQXP8sDP+THec/a4sECYE3pkp4Kunp6tzWX++Qm7PQSkqJYtpAWMnFR305o5RLzEmIvogrvzhSdGgPB0MMoe+1OXP8FoGtBb5MK44TWwPrQoyTLtXxpRjg029UzOlC77z9dxKnazsP+n8rYkc0nDxUSzO4Tm1S1fsY1H3NQa6nXc6tuZ5xXtXpZhmuN8Sbdhs1mKiXZO9iBIvDsO+DKQ1mI4xjk+qFELgXFqlsST71wvj/b9KQ3KDfAxX0X973IIiQEUZsMJu+MGe8ONbr4Cntz1eoqIYCuJVoqYPme1h8Bho7LDTpsTAdIRLvm2gOJkHysezsjVOb+V1GznxXiSc8YD7I7wpgTVtDLuEOJtBDXGoLc+sqlkkaWnENpmbpZQBX1PvVJsIqc8c3xeERipS3UmTTuOE6xX7ra5cbCdrtjobSg+TBBfmfulPJhzETEKL8Tq6hasiSRq4Ouvdvz83yOq5ybKQ0=
