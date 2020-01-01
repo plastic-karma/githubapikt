@@ -18,8 +18,8 @@ suspend fun main(): Unit = coroutineScope {
         language("kotlin")
         label("good-first-issue")
         state = "open"
-        created { last(6.months()) }
-        updated { last(month()) }
+        created { last(180.days()) }
+        updated { last(30.days()) }
     }
     .consumeEach { println(it) }
 

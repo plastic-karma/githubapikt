@@ -25,19 +25,19 @@ class DateBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
     /**
      * Creates a date string that dates back the given numbers in the past.
      */
-    fun month(noOfMonth: Long = 1): DateString {
+    fun days(noOfDays: Long): DateString {
         return DateString(DateTimeFormatter
             .ofPattern("yyyy-MM-dd")
             .withZone(clock.zone)
             .format(Instant
                 .now(clock)
-                .minus(30 * noOfMonth, ChronoUnit.DAYS)))
+                .minus(noOfDays, ChronoUnit.DAYS)))
     }
 
     /**
      * Creates a date string that dates back the given numbers in the past.
      */
-    fun Int.months(): DateString = month(this.toLong())
+    fun Int.days(): DateString = days(this.toLong())
 
     /**
      * Return the date portion of a temporal query parameter.

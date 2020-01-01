@@ -53,7 +53,7 @@ class SearchQueryBuilderTest {
     @Test
     fun `search with created date`() {
         val query = buildSearchQuery {
-            created { last(3.months()) }
+            created { last(90.days()) }
         }
         assertThat(query).isEqualTo("created:>1969-10-03")
     }
@@ -61,7 +61,7 @@ class SearchQueryBuilderTest {
     @Test
     fun `search with update date`() {
         val query = buildSearchQuery {
-            updated { last(3.months()) }
+            updated { last(90.days()) }
         }
         assertThat(query).isEqualTo("updated:>1969-10-03")
     }
@@ -72,8 +72,8 @@ class SearchQueryBuilderTest {
             language("kotlin")
             label("good-first-issue")
             label("help-wanted")
-            updated { last(3.months()) }
-            created { last(2.months()) }
+            updated { last(90.days()) }
+            created { last(60.days()) }
             state = "open"
         }
         assertThat(query).isEqualTo("label:good-first-issue label:help-wanted+language:kotlin+state:open+created:>1969-11-02+updated:>1969-10-03")
