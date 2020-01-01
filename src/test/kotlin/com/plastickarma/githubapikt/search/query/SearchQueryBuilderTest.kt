@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.time.Clock
 import java.time.Instant
-import java.time.ZoneId
+import java.time.ZoneOffset
 
 class SearchQueryBuilderTest {
 
@@ -80,6 +80,6 @@ class SearchQueryBuilderTest {
     }
 
     private fun buildSearchQuery(builder: SearchQueryBuilder.() -> Unit): String {
-        return SearchQueryBuilder(Clock.fixed(Instant.ofEpochMilli(0), ZoneId.of("UTC"))).also(builder).build()
+        return SearchQueryBuilder(Clock.fixed(Instant.ofEpochMilli(0), ZoneOffset.UTC)).also(builder).build()
     }
 }

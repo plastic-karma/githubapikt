@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneId
+import java.time.ZoneOffset
 
 class DateBuilderTest {
 
@@ -17,7 +18,7 @@ class DateBuilderTest {
 
     @Test
     fun `last(3 month()) creates a smaller-than date from 90 days ago`() {
-        val builder = DateBuilder(Clock.fixed(Instant.ofEpochMilli(0), ZoneId.of("UTC")))
+        val builder = DateBuilder(Clock.fixed(Instant.ofEpochMilli(0), ZoneOffset.UTC))
         builder.last(builder.month(3))
         assertThat(builder.build()).isEqualTo(">1969-10-02")
     }

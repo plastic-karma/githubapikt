@@ -49,7 +49,6 @@ tasks.withType<Test> {
         events("failed")
         showStandardStreams = true
         exceptionFormat = TestExceptionFormat.FULL
-
     }
 }
 
