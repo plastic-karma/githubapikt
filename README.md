@@ -5,11 +5,10 @@
 [![Code Climate](https://codeclimate.com/github/plastic-karma/githubapikt/badges/gpa.svg)](https://codeclimate.com/github/plastic-karma/githubapikt)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/aedd472da48540b0be60b9cbe4a73b9b)](https://www.codacy.com/manual/plastic-karma/githubapikt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=plastic-karma/githubapikt&amp;utm_campaign=Badge_Grade)
 
-
 This is an early version of a library to access [Github API v3](https://developer.github.com/v3/) written in [Kotlin](https://github.com/JetBrains/kotlin) using [coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html).
 
 There is still lots of stuff missing. Currently supported:
 
-- Authorization ([example](https://github.com/plastic-karma/githubapikt/blob/master/src/main/kotlin/com/plastickarma/githubapikt/examples/AuthExamples.kt))
-- Search
-  - Issues ([example](https://github.com/plastic-karma/githubapikt/blob/master/src/main/kotlin/com/plastickarma/githubapikt/examples/SearchExamples.kt#L14))
+  - Authorization ([example](https://github.com/plastic-karma/githubapikt/blob/master/src/main/kotlin/com/plastickarma/githubapikt/examples/AuthExamples.kt))
+  - Search
+    - Issues ([example](https://github.com/plastic-karma/githubapikt/blob/master/src/main/kotlin/com/plastickarma/githubapikt/examples/SearchExamples.kt#L14))
