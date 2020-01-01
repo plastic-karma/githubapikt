@@ -2,7 +2,6 @@ package com.plastickarma.githubapikt.search.query
 
 import java.time.Clock
 import java.time.Instant
-import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
@@ -26,7 +25,7 @@ class DateBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
     fun month(noOfMonth: Long = 1): DateString {
         return DateString(DateTimeFormatter
             .ofPattern("yyyy-MM-dd")
-            .withZone(ZoneId.systemDefault())
+            .withZone(clock.zone)
             .format(Instant
                 .now(clock)
                 .minus(30 * noOfMonth, ChronoUnit.DAYS)))
