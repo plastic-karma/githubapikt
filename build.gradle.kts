@@ -1,3 +1,4 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -45,7 +46,10 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
     testLogging {
-        events("passed", "skipped", "failed")
+        events("failed")
+        showStandardStreams = true
+        exceptionFormat = TestExceptionFormat.FULL
+
     }
 }
 
