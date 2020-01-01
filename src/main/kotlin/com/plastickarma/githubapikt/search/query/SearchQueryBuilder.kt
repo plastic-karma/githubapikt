@@ -41,25 +41,25 @@ class SearchQueryBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
      * Adds search parameters for created date.
      */
     fun created(dateBlock: DateBuilder.() -> Unit) {
-        createdDateBuilder = DateBuilder(clock).also(dateBlock)
+        createdDateBuilder = createDateBuilder(dateBlock)
     }
 
     /**
      * Adds search parameters for updated date.
      */
     fun updated(dateBlock: DateBuilder.() -> Unit) {
-        updatedDateBuilder = DateBuilder(clock).also(dateBlock)
+        updatedDateBuilder = createDateBuilder(dateBlock)
     }
+
+    private fun createDateBuilder(dateBlock: DateBuilder.() -> Unit) =
+        DateBuilder(clock).also(dateBlock)
 
     private fun languages(): String = languages.joinToString(" ") { "language:$it" }
 
     private fun state(): String = if (state.isNotEmpty()) "state:$state" else ""
 
-    private fun createdDate(): String =
-        createdDateBuilder?.let { "created:${it.build()}" }.orEmpty()
-
-    private fun updatedDate(): String =
-        updatedDateBuilder?.let { "updated:${it.build()}" }.orEmpty()
+    private fun dateBuilderString(prefix: String, dateBuilder: DateBuilder?) =
+        dateBuilder?.let { "$prefix:${it.build()}" }.orEmpty()
 
     /**
      * Creates the search query string.
@@ -68,7 +68,7 @@ class SearchQueryBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
         labels(),
         languages(),
         state(),
-        createdDate(),
-        updatedDate()
+        dateBuilderString("created", createdDateBuilder),
+        dateBuilderString("updated", updatedDateBuilder)
     ).filter { it.isNotEmpty() }.joinToString("+")
 }
