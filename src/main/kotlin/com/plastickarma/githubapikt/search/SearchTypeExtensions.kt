@@ -15,6 +15,9 @@ import kotlinx.coroutines.channels.ReceiveChannel
 val SearchType<*>.url: String
     get() = "$BASE_URL${this.api}"
 
+/**
+ * Extension function to create a [HttpContext] from a given [SearchType].
+ */
 fun <T : Any> SearchType<T>.httpContext() = DefaultHttpContext(this.deserializer)
 
 /**

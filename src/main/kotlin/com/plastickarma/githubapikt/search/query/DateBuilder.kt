@@ -22,6 +22,9 @@ class DateBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
         this.date = ">${date.date}"
     }
 
+    /**
+     * Creates a date string that dates back the given numbers in the past.
+     */
     fun month(noOfMonth: Long = 1): DateString {
         return DateString(DateTimeFormatter
             .ofPattern("yyyy-MM-dd")
@@ -31,6 +34,9 @@ class DateBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
                 .minus(30 * noOfMonth, ChronoUnit.DAYS)))
     }
 
+    /**
+     * Creates a date string that dates back the given numbers in the past.
+     */
     fun Int.months(): DateString = month(this.toLong())
 
     /**

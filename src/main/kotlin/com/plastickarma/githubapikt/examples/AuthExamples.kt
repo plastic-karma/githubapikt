@@ -9,6 +9,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.coroutineScope
 
+/**
+ * Examples on how to use authorization.
+ */
 @ExperimentalCoroutinesApi
 suspend fun main(): Unit = coroutineScope {
 
