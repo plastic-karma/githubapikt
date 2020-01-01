@@ -78,27 +78,30 @@ tasks.withType<JacocoReport> {
 tasks {
     named<Task>("check") {
         dependsOn(named<Task>("jacocoTestReport"))
-        dependsOn(named<Task>("jacocoTestCoverageVerification"))
     }
     named<Task>("build") {
         dependsOn(named<Task>("dokka"))
     }
+    named<Task>("jacocoTestCoverageVerification") {
+        dependsOn(named<Task>("jacocoTestReport"))
+    }
 }
 
 tasks.withType<JacocoCoverageVerification> {
+
     violationRules {
         rule {
             limit {
                 counter = "LINE"
-                minimum = "0.80".toBigDecimal()
+                minimum = "0.85".toBigDecimal()
             }
             limit {
                 counter = "BRANCH"
-                minimum = "0.80".toBigDecimal()
+                minimum = "0.85".toBigDecimal()
             }
             limit {
                 counter = "COMPLEXITY"
-                minimum = "0.50".toBigDecimal()
+                minimum = "0.60".toBigDecimal()
             }
         }
     }
@@ -111,4 +114,9 @@ tasks.withType<DokkaTask> {
     outputDirectory = "$buildDir/reports/javadoc"
     noJdkLink = true
     noStdlibLink = true
+}
+
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.kotlinOptions {
+    freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
 }

@@ -11,20 +11,24 @@ import kotlinx.coroutines.coroutineScope
 suspend fun main(): Unit = coroutineScope {
 
     // search on coroutine scope
-    search(
-        type = ISSUES,
-        context = GitHubAPIContext()) { }
+    search(type = ISSUES, context = GitHubAPIContext()) {
+        language("kotlin")
+        label("good-first-issue")
+        state = "open"
+        created { last(6.months()) }
+        updated { last(month()) }
+    }
     .consumeEach { println(it) }
 
-    // search on API context
-    GitHubAPIContext().search(
-        type = ISSUES,
-        scope = this) { }
-    .consumeEach { println(it) }
-
-    // search on type
-    ISSUES.search(
-        apiContext = GitHubAPIContext(),
-        scope = this) { }
-    .consumeEach { println(it) }
+//    // search on API context
+//    GitHubAPIContext().search(
+//        type = ISSUES,
+//        scope = this) { }
+//    .consumeEach { println(it) }
+//
+//    // search on type
+//    ISSUES.search(
+//        apiContext = GitHubAPIContext(),
+//        scope = this) { }
+//    .consumeEach { println(it) }
 }
