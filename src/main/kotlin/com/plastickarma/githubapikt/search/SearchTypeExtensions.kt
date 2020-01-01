@@ -24,11 +24,12 @@ fun <T : Any> SearchType<T>.httpContext() = DefaultHttpContext(this.deserializer
  * @see [search]
  */
 @ExperimentalCoroutinesApi
-fun <T : Any> SearchType<T>.search(
+inline fun <T : Any> SearchType<T>.search(
     apiContext: GitHubAPIContext,
     scope: CoroutineScope,
     httpContext: HttpContext<List<T>> = this.httpContext(),
-    query: SearchQueryBuilder.() -> Unit
+    queryBuilder: SearchQueryBuilder = SearchQueryBuilder(),
+    crossinline query: SearchQueryBuilder.() -> Unit
 ): ReceiveChannel<T> {
-    return apiContext.search(this, scope, httpContext, query)
+    return apiContext.search(this, scope, httpContext, queryBuilder, query)
 }

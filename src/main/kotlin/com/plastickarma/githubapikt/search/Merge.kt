@@ -13,6 +13,6 @@ import kotlinx.coroutines.channels.produce
  * @return channel that contains elements from all given channels
  */
 @ExperimentalCoroutinesApi
-fun <T> merge(scope: CoroutineScope, vararg channels: ReceiveChannel<T>) = scope.produce {
+fun <T> merge(scope: CoroutineScope, channels: List<ReceiveChannel<T>>) = scope.produce {
     channels.forEach { channel -> channel.consumeEach { send(it) } }
 }

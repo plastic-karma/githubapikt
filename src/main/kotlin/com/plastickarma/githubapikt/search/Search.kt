@@ -19,13 +19,14 @@ import kotlinx.coroutines.channels.produce
  * @see [https://developer.github.com/v3/search]
  */
 @ExperimentalCoroutinesApi
-fun <T : Any> GitHubAPIContext.search(
+inline fun <T : Any> GitHubAPIContext.search(
     type: SearchType<T>,
     scope: CoroutineScope,
     httpContext: HttpContext<List<T>> = type.httpContext(),
-    query: SearchQueryBuilder.() -> Unit
+    queryBuilder: SearchQueryBuilder = SearchQueryBuilder(),
+    crossinline query: SearchQueryBuilder.() -> Unit
 ): ReceiveChannel<T> = scope.produce {
-    var queryParameters = listOf("q" to SearchQueryBuilder().also(query).build())
+    var queryParameters = listOf("q" to queryBuilder.also(query).build())
     var currentUrl = type.url
     while (true) {
         val request = httpContext.httpGET(currentUrl, queryParameters)
@@ -49,10 +50,26 @@ fun <T : Any> GitHubAPIContext.search(
  * @see [https://developer.github.com/v3/search]
  */
 @ExperimentalCoroutinesApi
-fun <T : Any> CoroutineScope.search(
+inline fun <T : Any> CoroutineScope.search(
     type: SearchType<T>,
     context: GitHubAPIContext,
     httpContext: HttpContext<List<T>> = type.httpContext(),
-    query: SearchQueryBuilder.() -> Unit
+    queryBuilder: SearchQueryBuilder = SearchQueryBuilder(),
+    crossinline query: SearchQueryBuilder.() -> Unit
 ) =
-    context.search(type, this, httpContext, query)
+    context.search(type, this, httpContext, queryBuilder, query)
+
+/**
+ * Search API for Github. Makes a request for each search query.
+ * @param type the type of entity to search n GitHub (e.g. issue or code)
+ * @param httpContext Http request context
+ * @return a [ReceiveChannel] that generates items of the given search type.
+ * @see [https://developer.github.com/v3/search]
+ */
+@ExperimentalCoroutinesApi
+fun <T : Any> List<SearchQueryBuilder>.searchAll(
+    type: SearchType<T>,
+    scope: CoroutineScope,
+    context: GitHubAPIContext,
+    httpContext: HttpContext<List<T>> = type.httpContext()
+) = merge(scope, this.map { context.search(type, scope, httpContext, it) { } })

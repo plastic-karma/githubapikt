@@ -72,3 +72,10 @@ class SearchQueryBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
         dateBuilderString("updated", updatedDateBuilder)
     ).filter { it.isNotEmpty() }.joinToString("+")
 }
+
+/**
+ * Entry point for creating SearchQueryBuilders.
+ */
+fun searchFor(body: SearchQueryBuilder.() -> Unit): SearchQueryBuilder {
+    return SearchQueryBuilder().apply(body)
+}

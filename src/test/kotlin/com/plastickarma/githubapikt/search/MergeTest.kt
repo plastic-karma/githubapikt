@@ -12,7 +12,7 @@ class MergeTest {
 
     @Test
     fun `merge combines elements from all given channels into one`() = runBlockingTest {
-        val merged = merge(this,
+        val merged = merge(this, listOf(
             this.produce {
                 send(1)
                 send(2)
@@ -24,14 +24,14 @@ class MergeTest {
             this.produce {
                 send(5)
                 send(6)
-            }
+            })
         ).toList()
         assertThat(merged).containsExactly(1, 2, 3, 4, 5, 6)
     }
 
     @Test
     fun `merge works with empty channels`() = runBlockingTest {
-        val merged = merge(this,
+        val merged = merge(this, listOf(
             this.produce {
                 send(1)
                 send(2)
@@ -41,14 +41,14 @@ class MergeTest {
             this.produce {
                 send(5)
                 send(6)
-            }
+            })
         ).toList()
         assertThat(merged).containsExactly(1, 2, 5, 6)
     }
 
     @Test
     fun `merge works with no channels`() = runBlockingTest {
-        val merged = merge<Int>(this).toList()
+        val merged = merge<Int>(this, emptyList()).toList()
         assertThat(merged).isEmpty()
     }
 }

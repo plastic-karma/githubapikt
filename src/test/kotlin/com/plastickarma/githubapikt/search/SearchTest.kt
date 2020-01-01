@@ -5,6 +5,7 @@ import com.github.kittinunf.result.Result
 import com.plastickarma.githubapikt.base.GitHubAPIContext
 import com.plastickarma.githubapikt.http.HttpContext
 import com.plastickarma.githubapikt.model.Issue
+import com.plastickarma.githubapikt.search.query.searchFor
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.channels.toList
@@ -114,6 +115,52 @@ class SearchTest {
             .toList()
 
         assertThat(issues).containsExactlyElementsOf(firstPage + secondPage + thirdPage)
+    }
+
+    @Test
+    fun `searchAll github issues returns list of issues`() = runBlockingTest {
+        val expectedIssues1 = listOf(1, 2).toIssues()
+        val expectedIssues2 = listOf(3, 4).toIssues()
+
+        val mockRequest1 = mockk<Request>()
+        val mockRequest2 = mockk<Request>()
+
+        val mockResponse = mockk<Response> {
+            every { headers } returns Headers()
+        }
+
+        val mockResult1 = mockk<Result<List<Issue>, FuelError>> {
+            every { get() } returns expectedIssues1
+        }
+
+        val mockResult2 = mockk<Result<List<Issue>, FuelError>> {
+            every { get() } returns expectedIssues2
+        }
+
+        val mockHttpContext = object : HttpContext<List<Issue>> {
+            override suspend fun dispatchRequest(request: Request) = when (request) {
+                mockRequest1 -> Triple(mockRequest1, mockResponse, mockResult1)
+                mockRequest2 -> Triple(mockRequest2, mockResponse, mockResult2)
+                else -> throw RuntimeException("dispatchRequest")
+            }
+
+            override fun httpGET(url: String, parameters: Parameters) = when {
+                    parameters.contains(Pair("q", "label:good-first-issue")) -> mockRequest1
+                    parameters.contains(Pair("q", "label:help-wanted")) -> mockRequest2
+                    else -> throw RuntimeException("httpGET")
+                }
+            }
+
+        val issues = listOf(
+            searchFor {
+                label("good-first-issue")
+            },
+            searchFor {
+                label("help-wanted")
+            }
+        ).searchAll(ISSUES, this, GitHubAPIContext(), mockHttpContext).toList()
+
+        assertThat(issues).isEqualTo(expectedIssues1 + expectedIssues2)
     }
 }
 
