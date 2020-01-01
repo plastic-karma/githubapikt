@@ -1,6 +1,8 @@
+import com.jfrog.bintray.gradle.BintrayExtension.*
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.util.Date
 
 plugins {
     kotlin("jvm") version("1.3.50")
@@ -8,10 +10,12 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "8.1.0"
     id("io.gitlab.arturbosch.detekt") version "1.0.0-RC15"
     id("org.jetbrains.dokka") version "0.9.18"
+    id("com.jfrog.bintray") version "1.8.4"
+    `maven-publish`
 }
 
 group = "com.plastickarma"
-version = "0.1-SNAPSHOT"
+version = "0.0.4"
 
 repositories {
     jcenter()
@@ -122,4 +126,70 @@ tasks.withType<DokkaTask> {
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
     freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
+}
+
+val projectName: String = "githubapikt"
+
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
+    setPublications("main")
+    publish = true
+    override = true
+
+    pkg(closureOf<PackageConfig> {
+        repo = "maven"
+        name = "githubapikt"
+        vcsUrl = "https://github.com/plastic-karma/githubapikt.git"
+        version(closureOf<VersionConfig> {
+            name = project.version.toString()
+            desc = "Kotlin Github API wrapper"
+            released = Date().toString()
+        })
+    })
+}
+
+publishing {
+    publications {
+        register("main", MavenPublication::class) {
+            artifactId = projectName
+            val sourcesJar by tasks.creating(Jar::class) {
+                this.classifier = "sources"
+                from(sourceSets["main"].allSource)
+            }
+
+            val javadocJar by tasks.creating(Jar::class) {
+                this.classifier = "javadoc"
+                from("$buildDir/reports/javadoc")
+            }
+
+            from(components["java"])
+            artifact(sourcesJar)
+            artifact(javadocJar)
+
+            pom {
+                name.set(projectName)
+                description.set("This is an early version of a library to access Github API v3 written in Kotlin using coroutines.")
+                url.set("https://github.com/plastic-karma/githubapikt/")
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://github.com/plastic-karma/githubapikt/blob/master/LICENSE")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("plastic-karma")
+                        name.set("Benjamin Rogge")
+                        email.set("benni.rogge@gmail.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com/plastic-karma/githubapikt.git")
+                    developerConnection.set("scm:git:ssh://github.com/plastic-karma/githubapikt.git")
+                    url.set("https://github.com/plastic-karma/githubapikt")
+                }
+            }
+        }
+    }
 }
