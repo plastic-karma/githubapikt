@@ -1,5 +1,6 @@
 [![Kotlin version badge](https://img.shields.io/badge/kotlin-1.3-blue.svg)](https://kotlinlang.org/docs/reference/whatsnew13.html) 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
+ [![Download](https://api.bintray.com/packages/plastic-karma/maven/githubapikt/images/download.svg) ](https://bintray.com/plastic-karma/maven/githubapikt/_latestVersion)
 [![Build Status](https://api.travis-ci.com/plastic-karma/githubapikt.svg?branch=master)](https://travis-ci.com/plastic-karma/githubapikt) 
 [![Coverage Status](https://codecov.io/gh/plastic-karma/githubapikt/branch/master/graph/badge.svg)](https://codecov.io/gh/plastic-karma/githubapikt)
 [![Code Climate](https://codeclimate.com/github/plastic-karma/githubapikt/badges/gpa.svg)](https://codeclimate.com/github/plastic-karma/githubapikt)
