@@ -1,5 +1,6 @@
 package com.plastickarma.githubapikt.search.query
 
+import com.plastickarma.githubapikt.search.query.SortByType.interactions
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.time.Clock
@@ -74,9 +75,10 @@ class SearchQueryBuilderTest {
             label("help-wanted")
             updated { last(90.days()) }
             created { last(60.days()) }
+            sortBy most interactions
             state = "open"
         }
-        assertThat(query).isEqualTo("label:good-first-issue label:help-wanted+language:kotlin+state:open+created:>1969-11-02+updated:>1969-10-03")
+        assertThat(query).isEqualTo("label:good-first-issue label:help-wanted+language:kotlin+state:open+created:>1969-11-02+updated:>1969-10-03+sort:interactions-desc")
     }
 
     private fun buildSearchQuery(builder: SearchQueryBuilder.() -> Unit): String {

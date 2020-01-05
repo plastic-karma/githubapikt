@@ -31,7 +31,6 @@ inline fun <T : Any> GitHubAPIContext.search(
     while (true) {
         val request = httpContext.httpGET(currentUrl, queryParameters)
         val (_, response, result) = httpContext.dispatchRequest(request)
-
         result.get().forEach { send(it) }
 
         val linkHeader = response.nextLink() ?: return@produce

@@ -16,6 +16,8 @@ class SearchQueryBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
 
     private var updatedDateBuilder: DateBuilder? = null
 
+    private var sortQuery: String? = null
+
     /**
      * State parameter (for issues).
      */
@@ -51,6 +53,16 @@ class SearchQueryBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
         updatedDateBuilder = createDateBuilder(dateBlock)
     }
 
+    /**
+     * Entry point to add sort query parameter.
+     */
+    val sortBy: SortByBuilder
+        get() {
+            return SortByBuilder { query ->
+                sortQuery = query
+            }
+        }
+
     private fun createDateBuilder(dateBlock: DateBuilder.() -> Unit) =
         DateBuilder(clock).also(dateBlock)
 
@@ -61,6 +73,8 @@ class SearchQueryBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
     private fun dateBuilderString(prefix: String, dateBuilder: DateBuilder?) =
         dateBuilder?.let { "$prefix:${it.build()}" }.orEmpty()
 
+    private fun buildSortString(sortQuery: String?) = sortQuery.orEmpty()
+
     /**
      * Creates the search query string.
      */
@@ -69,7 +83,8 @@ class SearchQueryBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
         languages(),
         state(),
         dateBuilderString("created", createdDateBuilder),
-        dateBuilderString("updated", updatedDateBuilder)
+        dateBuilderString("updated", updatedDateBuilder),
+        buildSortString(sortQuery)
     ).filter { it.isNotEmpty() }.joinToString("+")
 }
 
