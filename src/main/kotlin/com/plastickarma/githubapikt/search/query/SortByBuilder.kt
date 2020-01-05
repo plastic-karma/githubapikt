@@ -5,6 +5,10 @@ package com.plastickarma.githubapikt.search.query
  * @param query Query string to use in Github API.
  */
 sealed class SortByType(val query: String)
+
+/**
+ * Sorts by interactions.
+ */
 object Interactions : SortByType("interactions")
 
 /**
