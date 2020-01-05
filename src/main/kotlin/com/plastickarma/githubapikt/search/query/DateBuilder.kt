@@ -8,8 +8,10 @@ import java.time.temporal.ChronoUnit
 /**
  * DSL builder class for dates in search queries.
  * Currently supports last(month()) and last(X.months()).
- * @see [https://help.github.com/en/github/searching-for-information-on-github/searching-issues-and-pull-requests#search-by-when-an-issue-or-pull-request-was-created-or-last-updated]
+ * @see [https://help.github.com/en/github/searching-for-information-on-github/searching-issues-and-pull-requests
+ * #search-by-when-an-issue-or-pull-request-was-created-or-last-updated]
  */
+@SearchQuery
 class DateBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
 
     private var date = ""

@@ -1,6 +1,5 @@
 package com.plastickarma.githubapikt.search.query
 
-import com.plastickarma.githubapikt.search.query.SortByType.interactions
 import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 
@@ -13,7 +12,7 @@ class SortByBuilderTest {
             queryResult = query
         }
 
-        sortBy most interactions
+        sortBy most Interactions
 
         assertThat(queryResult).isEqualTo("sort:interactions-desc")
     }
@@ -25,7 +24,7 @@ class SortByBuilderTest {
             queryResult = query
         }
 
-        sortBy fewest interactions
+        sortBy fewest Interactions
 
         assertThat(queryResult).isEqualTo("sort:interactions-asc")
     }

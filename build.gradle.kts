@@ -58,6 +58,8 @@ tasks.withType<Test> {
 
 detekt {
     failFast = true
+    buildUponDefaultConfig = true
+    config = project.files("./detekt-config.yml")
 }
 
 jacoco {
@@ -126,6 +128,10 @@ tasks.withType<DokkaTask> {
 val compileKotlin: KotlinCompile by tasks
 compileKotlin.kotlinOptions {
     freeCompilerArgs = listOf("-XXLanguage:+InlineClasses")
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
+    exclude("**/examples/**")
 }
 
 val projectName: String = "githubapikt"

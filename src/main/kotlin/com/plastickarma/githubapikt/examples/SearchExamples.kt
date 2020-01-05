@@ -2,7 +2,7 @@ package com.plastickarma.githubapikt.examples
 
 import com.plastickarma.githubapikt.base.GitHubAPIContext
 import com.plastickarma.githubapikt.search.ISSUES
-import com.plastickarma.githubapikt.search.query.SortByType.*
+import com.plastickarma.githubapikt.search.query.Interactions
 import com.plastickarma.githubapikt.search.search
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.consumeEach
@@ -21,7 +21,7 @@ suspend fun main(): Unit = coroutineScope {
         state = "open"
         created { last(180.days()) }
         updated { last(180.days()) }
-        sortBy fewest interactions
+        sortBy fewest Interactions
     }
     .consumeEach { println(it) }
 

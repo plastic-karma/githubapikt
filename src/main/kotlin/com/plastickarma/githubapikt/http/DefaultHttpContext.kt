@@ -1,6 +1,10 @@
 package com.plastickarma.githubapikt.http
 
-import com.github.kittinunf.fuel.core.*
+import com.github.kittinunf.fuel.core.Parameters
+import com.github.kittinunf.fuel.core.Request
+import com.github.kittinunf.fuel.core.ResponseDeserializable
+import com.github.kittinunf.fuel.core.ResponseResultOf
+import com.github.kittinunf.fuel.coroutines.awaitResponseResult
 import com.plastickarma.githubapikt.base.githubGET
 
 /**

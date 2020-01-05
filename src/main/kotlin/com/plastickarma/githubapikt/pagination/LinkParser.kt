@@ -6,6 +6,7 @@ private val LINK_REGEX = "<(.+)>.*;.*rel=\"(.*)\"".toRegex()
  * Parses a link header.
  * @see [https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link]
  */
+@SuppressWarnings("MagicNumber")
 fun parseLinkHeader(header: String): List<LinkHeader> {
     return header.split(",")
         .flatMap { LINK_REGEX.findAll(it).toList() }

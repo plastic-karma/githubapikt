@@ -6,6 +6,7 @@ import java.time.Clock
  * Builder to construct search queries for github search.
  * @see [https://developer.github.com/v3/search/#constructing-a-search-query]
  */
+@SearchQuery
 class SearchQueryBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
 
     private val labels: MutableList<String> = emptyList<String>().toMutableList()
@@ -29,8 +30,6 @@ class SearchQueryBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
     fun label(label: String) {
         labels.add(label)
     }
-
-    private fun labels(): String = labels.joinToString(" ") { "label:$it" }
 
     /**
      * Adds a (programming)language to the search query.
@@ -66,25 +65,16 @@ class SearchQueryBuilder(private val clock: Clock = Clock.systemDefaultZone()) {
     private fun createDateBuilder(dateBlock: DateBuilder.() -> Unit) =
         DateBuilder(clock).also(dateBlock)
 
-    private fun languages(): String = languages.joinToString(" ") { "language:$it" }
-
-    private fun state(): String = if (state.isNotEmpty()) "state:$state" else ""
-
-    private fun dateBuilderString(prefix: String, dateBuilder: DateBuilder?) =
-        dateBuilder?.let { "$prefix:${it.build()}" }.orEmpty()
-
-    private fun buildSortString(sortQuery: String?) = sortQuery.orEmpty()
-
     /**
      * Creates the search query string.
      */
     fun build(): String = listOf(
-        labels(),
-        languages(),
-        state(),
-        dateBuilderString("created", createdDateBuilder),
-        dateBuilderString("updated", updatedDateBuilder),
-        buildSortString(sortQuery)
+        labels.labelParameter(),
+        languages.languageParameter(),
+        state.stateParameter(),
+        createdDateBuilder.dateParameter("created"),
+        updatedDateBuilder.dateParameter("updated"),
+        sortQuery.orEmpty()
     ).filter { it.isNotEmpty() }.joinToString("+")
 }
 

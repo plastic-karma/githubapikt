@@ -4,14 +4,13 @@ package com.plastickarma.githubapikt.search.query
  * Type to sort by (e.g. interactions, comments, stars)
  * @param query Query string to use in Github API.
  */
-enum class SortByType(val query: String) {
-
-    interactions("interactions")
-}
+sealed class SortByType(val query: String)
+object Interactions : SortByType("interactions")
 
 /**
  * Builder class to enable sorting in search query DSL.
  */
+@SearchQuery
 class SortByBuilder(private val queryCallback: (String) -> Unit) {
 
     /**
