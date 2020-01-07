@@ -18,7 +18,6 @@ fun DateBuilder?.dateParameter(prefix: String) = this?.let { "$prefix:${it.build
 private fun List<String>.toParameter(prefix: String): String =
     this.joinToString(" ") { "$prefix:$it" }
 
-
 /**
  * Creates a state parameter from the given state string.
  */
